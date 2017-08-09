@@ -1,0 +1,12 @@
+name: lbaas-synchronizer
+accessor:
+  username: xosadmin@opencord.org
+  password: "@/opt/xos/services/lbaas/credentials/xosadmin@opencord.org"
+required_models:
+  - LbService
+  - Loadbalancer
+  - ServiceDependency
+dependency_graph: "/opt/xos/synchronizers/lbaas/model-deps"
+steps_dir: "/opt/xos/synchronizers/lbaas/steps"
+sys_dir: "/opt/xos/synchronizers/lbaas/sys"
+model_policies_dir: "/opt/xos/synchronizers/lbaas/model_policies"

@@ -1,0 +1,17 @@
+---
+# loadbalancer_playbook
+
+- hosts: "{{ instance_name }}"
+  become: yes
+  
+  vars:
+    - instance_id: {{ instance_id }}
+    - update_time: {{ update_time }}
+    - loadbalancer: {{ loadbalancer }}
+    - listener: {{ listener }}
+    - pool: {{ pool }}
+    - members: {{ members }}
+    - health_monitor: {{ health_monitor }}
+
+  roles:
+    - copy_haproxy_config

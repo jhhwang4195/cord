@@ -1,0 +1,54 @@
+#Configuration for {{loadbalancer.lb_name}}
+#Updated : {{update_time}}
+#Bind IP : {{loadbalancer.vip_address}}
+
+global
+    daemon
+    user nobody
+    group nogroup
+    log /dev/log local0
+    log /dev/log local1 notice
+    stats timeout 10s
+    stats socket /run/{{loadbalancer.lb_name}}.sock mode 0666 level admin
+
+defaults
+    log global
+    retries 3
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+
+listen stats 
+    bind *:{{listener.stat_port}}
+    mode http
+    stats enable
+    stats refresh 2s
+    stats uri /stats
+
+frontend {{listener.listener_name}}
+    option tcplog
+{% if listener.protocol.lower() == "http" %}
+    option forwardfor
+{% endif %}
+    bind {{loadbalancer.vip_address}}:{{listener.protocol_port}}
+    mode {{listener.protocol.lower()}}
+    default_backend {{pool.pool_name}}
+
+backend {{pool.pool_name}}
+    mode {{pool.protocol.lower()}}
+{% if pool.lb_algorithm == "ROUND_ROBIN" %}
+    balance roundrobin
+{% elif pool.lb_algorithm == "LEAST_CONNECTIONS" %}
+    balance leastconn
+{% elif pool.lb_algorithm == "SOURCE_IP" %}
+    balance source
+{% endif %}
+    timeout check {{health_monitor.timeout}}
+{% if health_monitor.type == "HTTP" or health_monitor.type == "HTTPS" %}
+    option httpchk {{health_monitor.http_method}} {{health_monitor.url_path}}
+    http-check expect rstatus {{health_monitor.expected_codes|replace(",","|")}}
+{% endif %}
+{% for member in members.members %}
+{% set hm_opt = "check inter %ds fall %d"|format(health_monitor.delay, health_monitor.max_retries) %}
+    {{ "server %s %s:%d weight %d %s"|e|format(member.member_id, member.address, member.protocol_port, member.weight, hm_opt)|trim() }}
+{% endfor %}

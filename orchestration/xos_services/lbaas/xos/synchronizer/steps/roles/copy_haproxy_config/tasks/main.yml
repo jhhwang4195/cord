@@ -1,0 +1,15 @@
+---
+
+- name: Create haproxy config directory
+  file:
+    path=/opt/xos/instance_volume/{{instance_id}}
+    state=directory
+
+- name: Write haproxy.cfg file to haproxy config path
+  template:
+    src=haproxy.cfg.j2
+    dest=/opt/xos/instance_volume/{{instance_id}}/haproxy.cfg
+
+## - name: andrew  swarm_service_name:instance_name
+##   shell: docker service update  --force  {..{ publish }..}  {..{ volume }..} {..{ swarm_service_name }..}
+

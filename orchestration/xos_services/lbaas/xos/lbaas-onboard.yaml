@@ -1,0 +1,23 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+description: Onboard the lbaas
+
+imports:
+   - custom_types/xos.yaml
+
+topology_template:
+  node_templates:
+    lbaas:
+      type: tosca.nodes.ServiceController
+      properties:
+          base_url: file:///opt/xos_services/lbaas/xos/
+          # The following will concatenate with base_url automatically, if
+          # base_url is non-null.
+          xproto: ./
+          admin: admin.py
+          tosca_custom_types: lbaas.yaml
+          tosca_resource: tosca/resources/lbservice.py, tosca/resources/lbtenant.py
+          rest_service: api/service/lbservice.py
+          rest_tenant: api/tenant/loadbalancer.py, api/tenant/listener.py, api/tenant/pool.py, api/tenant/health.py
+          private_key: file:///opt/xos/key_import/lbaas_rsa
+          public_key: file:///opt/xos/key_import/lbaas_rsa.pub
