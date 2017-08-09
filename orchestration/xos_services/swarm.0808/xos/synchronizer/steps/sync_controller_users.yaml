@@ -1,0 +1,9 @@
+---
+## Template file: sync_controller_users.yaml
+
+- hosts: {{ swarm_manager_address }}
+  become: true
+  tasks:
+    - name: Dummy action
+      shell: echo "name={{ name }}   admin_user={{ admin_user }}   role={{ role }}"
+

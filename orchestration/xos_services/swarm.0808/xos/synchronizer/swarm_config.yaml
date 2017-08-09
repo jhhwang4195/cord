@@ -1,0 +1,21 @@
+name: swarm-synchronizer
+accessor:
+  username: xosadmin@opencord.org
+  password: "@/opt/xos/services/swarm/credentials/xosadmin@opencord.org" 
+dependency_graph: "/opt/xos/synchronizers/swarm/model-deps"
+steps_dir: "/opt/xos/synchronizers/swarm/steps"
+sys_dir: "/opt/xos/synchronizers/swarm/sys"
+model_policies_dir: "/opt/xos/synchronizers/swarm/model_policies"
+images_directory: "/opt/xos/images"
+required_models:
+  - ControllerImages
+  - ControllerNetwork
+  - ControllerSite
+  - ControllerSlice
+  - ControllerUser
+  - Image
+  - Instance
+  - ControllerSitePrivilege
+  - ControllerSlicePrivilege
+##  - Port  ## FIXME
+  - Role

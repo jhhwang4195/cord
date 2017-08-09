@@ -1,0 +1,7 @@
+---
+## Template file: sync_controller_sites.yaml
+
+- hosts: {{ swarm_manager_address }}
+  become: true 
+  tasks:
+    - shell: echo "endpoint={{ endpoint }}   login_user={{ admin_user }}   tenant={{ tenant }}"

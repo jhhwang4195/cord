@@ -1,0 +1,35 @@
+---
+## Template file: sync_controller_images.yaml
+
+- hosts: {{ swarm_manager_address }}
+  become: true
+  tasks:
+    - name: make a directory for swarm archive image
+      file:
+        path: {{ image_dir }}
+        state: directory
+        mode: 0755 
+    - name: copy docker image file(.tar) to swarm manager node
+      copy:
+        src: {{ image_file_path }}
+        dest: {{ image_file_path }}
+    - name: load a docker image from archive file(example-abc.tar)
+      shell: docker load -i {{ image_file_path }}
+    - name: change tag information
+      shell: docker tag  {{ image_name }}  {{ swarm_manager_address }}:{{ docker_registry_port }}/{{ image_name }}:{{ image_tag }}
+    - name: push docker image to local registry
+      docker_image:
+        name: {{ swarm_manager_address }}:{{ docker_registry_port }}/{{ image_name }}
+        tag: {{ image_tag }}
+        push: yes
+    - name: Inspect a image
+      docker_image_facts:
+        name: {{ swarm_manager_address }}:{{ docker_registry_port }}/{{ image_name }}:{{ image_tag }}
+
+
+## andrew. 
+##  If you can not use docker_image module of ansible, then run following shll module
+#   - name: push docker image to private registry
+#     shell: docker push          {{ swarm_manager_address }}:{{ docker_registry_port }}/{{ image_name }}:{{ image_tag }}
+
+

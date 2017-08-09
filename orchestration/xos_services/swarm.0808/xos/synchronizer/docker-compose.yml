@@ -1,0 +1,21 @@
+version: '2'
+
+networks:
+  xos:
+    external: true
+
+services:
+  synchronizer:
+    image: xosproject/swarm-synchronizer
+    networks:
+      - xos
+    #command: bash -c "sleep 86400"
+    volumes:
+        - /opt/cord/build/platform-install/credentials/xosadmin@opencord.org:/opt/xos/services/swarm/credentials/xosadmin@opencord.org
+    external_links: 
+        - sona_xos_redis_1:redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1000k"
+        max-file: "5"

@@ -1,0 +1,9 @@
+## TODO (sync_instances.yaml)
+##   - Get publishing port value from docker image
+##     $ docker image inspect swarm00:5000/lbaas:17.07  --format "table {{.Config.ExposedPorts}}"
+##   - Save this exporsed port value to controllerimages.glance_image_id
+
+## TODO (sync_instances.yaml)
+##   How can I send a process signal 'HUP' to LBaaS container
+##   docker kill -s HUP $(docker ps --no-trunc --filter 'name=mysite_lbaas-1' --format "table {{.Names}}" | grep -v "NAME")
+

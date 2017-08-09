@@ -1,0 +1,117 @@
+{
+    "Slice": [
+        "Site", 
+        "User"
+    ], 
+    "ImageDeployments": [
+        "Image", 
+        "Deployment"
+    ], 
+    "ControllerImages": [
+        "Image"
+    ], 
+    "ReservedResource": [
+        "Instance"
+    ], 
+    "ControllerNetwork": [
+        "Network", 
+        "Controller"
+    ], 
+    "NetworkSlice": [
+        "Network", 
+        "Slice"
+    ], 
+    "Charge": [
+        "Account", 
+        "Slice", 
+        "Invoice"
+    ], 
+    "ControllerSite": [
+        "Site", 
+        "Controller"
+    ], 
+    "Node": [
+        "Site"
+    ], 
+    "ControllerSlice": [
+        "Controller", 
+        "Slice"
+    ], 
+    "ControllerSitePrivilege": [
+        "Controller"
+    ], 
+    "ControllerUser": [
+        "User", 
+        "Controller"
+    ], 
+    "UserCredential": [
+        "User"
+    ], 
+    "UserDashboardView": [
+        "User", 
+        "DashboardView"
+    ], 
+    "Controller": [
+        "Deployment"
+    ], 
+    "User": [
+        "Site"
+    ], 
+    "SliceTag": [
+        "Slice"
+    ], 
+    "Reservation": [
+        "Slice"
+    ], 
+    "Instance": [
+        "Image", 
+        "User", 
+        "Slice"
+    ], 
+    "Payment": [
+        "Account"
+    ], 
+    "Account": [
+        "Site"
+    ], 
+    "ControllerSlicePrivilege": [
+        "Controller"
+    ], 
+    "SiteDeployment": [
+        "Site", 
+        "Deployment", 
+        "Controller"
+    ], 
+    "SlicePrivilege": [
+        "User", 
+        "Slice", 
+        "Role"
+    ], 
+    "Port": [
+        "Network", 
+        "Instance"
+    ], 
+    "SitePrivilege": [
+        "User", 
+        "Site", 
+        "Role"
+    ], 
+    "SiteCredential": [
+        "Site"
+    ], 
+    "DeploymentPrivilege": [
+        "User", 
+        "Deployment", 
+        "Role"
+    ], 
+    "ControllerDashboardView": [
+        "Controller", 
+        "DashboardView"
+    ], 
+    "Invoice": [
+        "Account"
+    ], 
+    "SliceCredential": [
+        "Slice"
+    ]
+}

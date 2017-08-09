@@ -1,0 +1,51 @@
+---
+## Template file: sync_controller_networks.yaml
+
+- hosts: {{ swarm_manager_address }}
+  become: true 
+  tasks:
+    {% if delete -%} 
+    - name: delete a docker network '{{ network_name }}'
+      # shell: docker network rm  {{ network_name }}
+      docker_network:
+        name: {{ network_name }}
+        state: absent
+        force: yes 
+    {% elif duplicated -%} 
+    - name: network list on swarm cluster
+      shell: docker network ls
+    - name: network inspection '{{ network_name }}'
+      shell: docker network inspect  {{ network_name }} 
+    {% else -%} 
+    ## TODO  add kuryr parameter like following example:
+    ## docker network create      --driver=kuryr/libnetwork2:latest
+    ##                       --ipam-driver=kuryr/libnetwork2:latest
+    ##                       --subnet 192.168.0.0/24 
+    ##                       --gateway 192.168.0.1
+    ##                       --ipam-opt=neutron.pool.name=kuryr-subnetpool 
+    ##                               -o neutron.pool.name=kuryr-subnetpool 
+    ##                               -o neutron.net.name=kuryr-net 
+    ##                       kuryr-net
+    - name: create a docker network '{{ network_name }}'
+      shell: docker network create --driver overlay  --subnet {{ subnet }}  --gateway {{ gateway }}  {{ network_name }}
+    - name: network inspection '{{ network_name }}'
+      shell: docker network inspect  {{ network_name }} 
+    {% endif -%} 
+
+
+
+## andrew:  Don't use docker_network module for overlay network creation.
+## [ Issue ]
+##   ansible docker_network module makes some error, although overlay network is created on swarm cluster actually.
+
+#
+#   - name: Create a network with options
+#       docker_network:
+#         name: {{ network_name }}
+#         driver: overlay
+#         driver_options:
+#           com.docker.network.driver.overlay.vxlanid_list: andrew_vxlanid
+#         ipam_options:
+#           subnet: {{ subnet }}
+#           gateway: {{ gateway }}
+

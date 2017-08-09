@@ -1,0 +1,15 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+description: Onboard the Swarm service
+
+imports:
+   - custom_types/xos.yaml
+
+topology_template:
+  node_templates:
+    servicecontroller#swarm:
+      type: tosca.nodes.ServiceController
+      properties:
+          base_url: file:///opt/xos_services/swarm/xos/
+          no_build: true
+          image: xosproject/swarm-synchronizer
